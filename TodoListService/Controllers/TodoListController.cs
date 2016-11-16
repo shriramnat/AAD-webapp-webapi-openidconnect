@@ -36,10 +36,10 @@ namespace TodoListService.Controllers
         static ConcurrentBag<TodoItem> todoBag = new ConcurrentBag<TodoItem>();
         private bool IsValidToken()
         {
-            if (ClaimsPrincipal.Current.FindFirst("iss").Value != "https://sts.windows.net/e0c58632-8a66-4a0a-9f8b-d861ca93c482/")
-            {
-                return false;
-            }
+            //if (ClaimsPrincipal.Current.FindFirst("iss").Value != "https://sts.windows.net/e0c58632-8a66-4a0a-9f8b-d861ca93c482/")
+            //{
+            //    return false;
+            //}
             return true;
         }
 

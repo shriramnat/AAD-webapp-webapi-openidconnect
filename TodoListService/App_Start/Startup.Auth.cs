@@ -18,7 +18,7 @@ namespace TodoListService
                 {
                     Audience = ConfigurationManager.AppSettings["ida:Audience"],
                     Tenant = ConfigurationManager.AppSettings["ida:Tenant"],
-                    
+                    TokenValidationParameters = new System.IdentityModel.Tokens.TokenValidationParameters() { ValidateIssuer = false }
                 });
         }
     }
