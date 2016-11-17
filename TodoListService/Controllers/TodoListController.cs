@@ -24,6 +24,7 @@ using System.Web.Http;
 using System.Collections.Concurrent;
 using TodoListService.Models;
 using System.Security.Claims;
+using System.Configuration;
 
 namespace TodoListService.Controllers
 {
@@ -36,11 +37,12 @@ namespace TodoListService.Controllers
         static ConcurrentBag<TodoItem> todoBag = new ConcurrentBag<TodoItem>();
         private bool IsValidToken()
         {
-            //if (ClaimsPrincipal.Current.FindFirst("iss").Value != "https://sts.windows.net/e0c58632-8a66-4a0a-9f8b-d861ca93c482/")
-            //{
-            //    return false;
-            //}
-            return true;
+            var listOfAllowedDirectories = new List<string>(ConfigurationManager.AppSettings["directories"].Split(new char[] { ';' }));
+            if (listOfAllowedDirectories.Contains(ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value))
+            {
+                return true;
+            }
+            return false;
         }
 
         // GET api/todolist
@@ -68,7 +70,7 @@ namespace TodoListService.Controllers
         public void Post(TodoItem todo)
         {
             //if (ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/scope").Value != "user_impersonation")
-            if(! IsValidToken())
+            if (!IsValidToken())
             {
                 throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized, ReasonPhrase = "The Scope claim does not contain 'user_impersonation' or scope claim not found" });
             }
