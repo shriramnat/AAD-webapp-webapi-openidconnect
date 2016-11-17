@@ -167,7 +167,6 @@ namespace TodoListWebApp.Controllers
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
                     request.Content = content;
                     HttpResponseMessage response = await client.SendAsync(request);
-
                     //
                     // Return the To Do List in the view.
                     //

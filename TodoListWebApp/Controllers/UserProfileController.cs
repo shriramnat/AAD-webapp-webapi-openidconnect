@@ -82,6 +82,7 @@ namespace TodoListWebApp.Controllers
                 {
                     string responseString = await response.Content.ReadAsStringAsync();
                     profile = JsonConvert.DeserializeObject<UserProfile>(responseString);
+                    profile.Token = result.AccessToken;
                 }
                 else
                 {
@@ -96,6 +97,9 @@ namespace TodoListWebApp.Controllers
                     profile.DisplayName = " ";
                     profile.GivenName = " ";
                     profile.Surname = " ";
+                    profile.UserPrincipalName = " ";
+                    profile.ObjectId = " ";
+                    profile.Token = " ";
                     ViewBag.ErrorMessage = "UnexpectedError";
                 }
 
@@ -129,6 +133,9 @@ namespace TodoListWebApp.Controllers
                 profile.DisplayName = " ";
                 profile.GivenName = " ";
                 profile.Surname = " ";
+                profile.UserPrincipalName = " ";
+                profile.ObjectId = " ";
+                profile.Token = " ";
                 ViewBag.ErrorMessage = "AuthorizationRequired";
 
                 return View(profile);
