@@ -20,7 +20,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
 using System.Collections.Concurrent;
 using TodoListService.Models;
 using System.Security.Claims;
@@ -38,11 +37,7 @@ namespace TodoListService.Controllers
         private bool IsValidToken()
         {
             var listOfAllowedDirectories = new List<string>(ConfigurationManager.AppSettings["directories"].Split(new char[] { ';' }));
-            if (listOfAllowedDirectories.Contains(ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value))
-            {
-                return true;
-            }
-            return false;
+            return (listOfAllowedDirectories.Contains(ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value) ?  true :  false);
         }
 
         // GET api/todolist
